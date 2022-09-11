@@ -2,7 +2,7 @@
 name = "appnope"
 version = "0.1.3"
 description = "Disable App Nap on macOS >= 10.9"
-category = "main"
+category = "dev"
 optional = false
 python-versions = "*"
 
@@ -10,7 +10,7 @@ python-versions = "*"
 name = "asttokens"
 version = "2.0.8"
 description = "Annotate AST trees with source code positions"
-category = "main"
+category = "dev"
 optional = false
 python-versions = "*"
 
@@ -24,7 +24,7 @@ test = ["pytest", "astroid (<=2.5.3)"]
 name = "backcall"
 version = "0.2.0"
 description = "Specifications for callback functions passed in to an API"
-category = "main"
+category = "dev"
 optional = false
 python-versions = "*"
 
@@ -59,7 +59,7 @@ python-versions = ">=3.6"
 name = "decorator"
 version = "5.1.1"
 description = "Decorators for Humans"
-category = "main"
+category = "dev"
 optional = false
 python-versions = ">=3.5"
 
@@ -67,7 +67,7 @@ python-versions = ">=3.5"
 name = "executing"
 version = "1.0.0"
 description = "Get the currently executing AST node of a frame, and other information"
-category = "main"
+category = "dev"
 optional = false
 python-versions = "*"
 
@@ -97,7 +97,7 @@ woff = ["zopfli (>=0.1.4)", "brotlicffi (>=0.8.0)", "brotli (>=1.0.1)"]
 name = "ipython"
 version = "8.5.0"
 description = "IPython: Productive Interactive Computing"
-category = "main"
+category = "dev"
 optional = false
 python-versions = ">=3.8"
 
@@ -132,7 +132,7 @@ test_extra = ["pytest (<7.1)", "pytest-asyncio", "testpath", "curio", "matplotli
 name = "jedi"
 version = "0.18.1"
 description = "An autocompletion tool for Python that can be used for text editors."
-category = "main"
+category = "dev"
 optional = false
 python-versions = ">=3.6"
 
@@ -174,7 +174,7 @@ setuptools_scm = ">=4,<7"
 name = "matplotlib-inline"
 version = "0.1.6"
 description = "Inline Matplotlib backend for Jupyter"
-category = "main"
+category = "dev"
 optional = false
 python-versions = ">=3.5"
 
@@ -209,7 +209,12 @@ optional = false
 python-versions = ">=3.8"
 
 [package.dependencies]
-numpy = {version = ">=1.21.0", markers = "python_version >= \"3.10\""}
+numpy = [
+    {version = ">=1.18.5", markers = "platform_machine != \"aarch64\" and platform_machine != \"arm64\" and python_version < \"3.10\""},
+    {version = ">=1.19.2", markers = "platform_machine == \"aarch64\" and python_version < \"3.10\""},
+    {version = ">=1.20.0", markers = "platform_machine == \"arm64\" and python_version < \"3.10\""},
+    {version = ">=1.21.0", markers = "python_version >= \"3.10\""},
+]
 python-dateutil = ">=2.8.1"
 pytz = ">=2020.1"
 
@@ -220,7 +225,7 @@ test = ["hypothesis (>=5.5.3)", "pytest (>=6.0)", "pytest-xdist (>=1.31)"]
 name = "parso"
 version = "0.8.3"
 description = "A Python Parser"
-category = "main"
+category = "dev"
 optional = false
 python-versions = ">=3.6"
 
@@ -232,7 +237,7 @@ testing = ["docopt", "pytest (<6.0.0)"]
 name = "pexpect"
 version = "4.8.0"
 description = "Pexpect allows easy control of interactive console applications."
-category = "main"
+category = "dev"
 optional = false
 python-versions = "*"
 
@@ -243,7 +248,7 @@ ptyprocess = ">=0.5"
 name = "pickleshare"
 version = "0.7.5"
 description = "Tiny 'shelve'-like database with concurrency support"
-category = "main"
+category = "dev"
 optional = false
 python-versions = "*"
 
@@ -263,7 +268,7 @@ tests = ["check-manifest", "coverage", "defusedxml", "markdown2", "olefile", "pa
 name = "prompt-toolkit"
 version = "3.0.31"
 description = "Library for building powerful interactive command lines in Python"
-category = "main"
+category = "dev"
 optional = false
 python-versions = ">=3.6.2"
 
@@ -274,7 +279,7 @@ wcwidth = "*"
 name = "ptyprocess"
 version = "0.7.0"
 description = "Run a subprocess in a pseudo terminal"
-category = "main"
+category = "dev"
 optional = false
 python-versions = "*"
 
@@ -282,7 +287,7 @@ python-versions = "*"
 name = "pure-eval"
 version = "0.2.2"
 description = "Safely evaluate AST nodes without side effects"
-category = "main"
+category = "dev"
 optional = false
 python-versions = "*"
 
@@ -293,7 +298,7 @@ tests = ["pytest"]
 name = "pygments"
 version = "2.13.0"
 description = "Pygments is a syntax highlighting package written in Python."
-category = "main"
+category = "dev"
 optional = false
 python-versions = ">=3.6"
 
@@ -369,7 +374,7 @@ python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*"
 name = "stack-data"
 version = "0.5.0"
 description = "Extract data from python stack frames and tracebacks for informative displays"
-category = "main"
+category = "dev"
 optional = false
 python-versions = "*"
 
@@ -393,7 +398,7 @@ python-versions = ">=3.7"
 name = "traitlets"
 version = "5.3.0"
 description = ""
-category = "main"
+category = "dev"
 optional = false
 python-versions = ">=3.7"
 
@@ -421,14 +426,14 @@ all = ["rich (>=10.11.0,<13.0.0)", "shellingham (>=1.3.0,<2.0.0)", "colorama (>=
 name = "wcwidth"
 version = "0.2.5"
 description = "Measures the displayed width of unicode strings in a terminal"
-category = "main"
+category = "dev"
 optional = false
 python-versions = "*"
 
 [metadata]
 lock-version = "1.1"
-python-versions = ">=3.10,<3.11"
-content-hash = "2b3845a9142c69b608e1077db39bec2d98815c8dc5aa5497edfef2bad5240ca2"
+python-versions = ">=3.9,<3.11"
+content-hash = "426ba24f7fba1b9799b31f0d23993fa6216510e61657c514dfdd3dad83f41d1e"
 
 [metadata.files]
 appnope = [
