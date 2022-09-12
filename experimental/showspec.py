@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import typer
+import numpy as np
 import enum
 from collections.abc import Sequence
 import pathlib
@@ -16,6 +17,10 @@ class _SignalT(str, enum.Enum):
     ax = "ax"
     ay = "ay"
     az = "az"
+
+class _Scale(str, enum.Enum):
+    linear = "linear"
+    log = "log"
 
 
 def read(fp: pathlib.Path) -> pd.DataFrame:
@@ -33,8 +38,12 @@ def create_spectrum(data: Sequence[float], fs: float) -> Spectum:
     return Spectum(*ssig.spectrogram(data, fs))
 
 
-def show(spectrum: Spectum, name: str) -> None:
-    im = plt.pcolormesh(spectrum.t, spectrum.f, spectrum.sxx)
+def show(*, spectrum: Spectum, name: str, scale: _Scale) -> None:
+    im = plt.pcolormesh(
+        spectrum.t,
+        spectrum.f,
+        spectrum.sxx if scale is _Scale.linear else -20 * np.log10(spectrum.sxx)
+    )
     plt.colorbar(im)
     plt.title(name)
     plt.ylabel("Frequency [Hz]")
@@ -42,9 +51,18 @@ def show(spectrum: Spectum, name: str) -> None:
     plt.show()
 
 
-def app(filename: pathlib.Path, signal: _SignalT, fs: float = 320) -> None:
+def app(
+    filename: pathlib.Path,
+    signal: _SignalT,
+    fs: float = 320,
+    scale: _Scale = "linear"
+) -> None:
     data = read(filename)
-    show(create_spectrum(getattr(data, signal.value), fs), signal.value)
+    show(
+        name=signal.value,
+        scale=scale,
+        spectrum=create_spectrum(getattr(data, signal.value), fs),
+    )
 
 
 def main():
