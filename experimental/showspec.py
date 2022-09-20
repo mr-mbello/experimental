@@ -40,15 +40,14 @@ def create_spectrum(data: Sequence[float], fs: float) -> Spectum:
 
 
 def show(*, spectrum: Spectum, name: str, scale: _Scale) -> None:
-    match scale:
-        case _Scale.linear: sxx = spectrum.sxx
-        case _Scale.log: sxx = -20 * np.log10(spectrum.sxx)
-        case _Scale.rootpsd: sxx = np.sqrt(spectrum.sxx)
-    im = plt.pcolormesh(
-        spectrum.t,
-        spectrum.f,
-        sxx
-    )
+    if scale == _Scale.linear:
+        sxx = spectrum.sxx
+    if scale == _Scale.log:
+        sxx = -20 * np.log10(spectrum.sxx)
+    if scale == _Scale.rootpsd:
+        sxx = np.sqrt(spectrum.sxx)
+        
+    im = plt.pcolormesh(spectrum.t, spectrum.f, sxx)
     plt.colorbar(im)
     plt.title(name)
     plt.ylabel("Frequency [Hz]")
