@@ -21,6 +21,7 @@ class _SignalT(str, enum.Enum):
 class _Scale(str, enum.Enum):
     linear = "linear"
     log = "log"
+    rootpsd = "rootpsd"
 
 
 def read(fp: pathlib.Path) -> pd.DataFrame:
@@ -39,10 +40,14 @@ def create_spectrum(data: Sequence[float], fs: float) -> Spectum:
 
 
 def show(*, spectrum: Spectum, name: str, scale: _Scale) -> None:
+    match scale:
+        case _Scale.linear: sxx = spectrum.sxx
+        case _Scale.log: sxx = -20 * np.log10(spectrum.sxx)
+        case _Scale.rootpsd: sxx = np.sqrt(spectrum.sxx)
     im = plt.pcolormesh(
         spectrum.t,
         spectrum.f,
-        spectrum.sxx if scale is _Scale.linear else -20 * np.log10(spectrum.sxx)
+        sxx
     )
     plt.colorbar(im)
     plt.title(name)
