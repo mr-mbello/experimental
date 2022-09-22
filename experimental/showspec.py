@@ -26,7 +26,7 @@ class _Scale(str, enum.Enum):
 
 def read(fp: pathlib.Path) -> pd.DataFrame:
     columns: list[str] = [e.value for e in _SignalT]
-    return pd.read_csv(fp, header=None, names=columns) # type: ignore
+    return pd.read_csv(fp, header=0, names=columns) # type: ignore
 
 
 class Spectum(NamedTuple):
@@ -59,7 +59,7 @@ def app(
     filename: pathlib.Path,
     signal: _SignalT,
     fs: float = 320,
-    scale: _Scale = "linear"
+    scale: _Scale = "rootpsd"
 ) -> None:
     data = read(filename)
     show(
